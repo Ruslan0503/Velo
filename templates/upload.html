@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100;
+        }
+        .forswitch{
+            margin-left: 45%;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin-bottom:50px;          
+        }
+         
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }  
+
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #2196F3;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+          
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+          }
+          
+          input:checked + .slider {
+            background-color: #2196F3;
+          }
+          
+          input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+          }
+
+          input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+          }
+          
+          /* Rounded sliders */
+          .slider.round {
+            border-radius: 34px;
+          }
+          
+          .slider.round:before {
+            border-radius: 50%;
+          }
+
+        #forImage img,video{
+            width: 200px;
+            height: 200px;
+            padding: 10px;
+        }
+        .allform, .formall{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+        .checkboxs{
+            border-right: 1px solid black;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; padding-bottom:20px;"> Yangi Postni Sozlang </h1>
+    <div class="forswitch">
+         Musobaqa
+        <label class="switch">
+            <input type="checkbox" checked id="switcher">
+            <span class="slider round"></span>
+          </label>
+          Yangilik  
+    </div>
+
+    <!-- for news -->
+     <div class="allform" id="allform">
+         <div class="checkboxs">
+             <h1> Kerakli qismni belgilang1: </h1>
+            <p> <input type="checkbox" name="forbody" id="forbody" value="Matn">Matn </p>
+            <p> <input type="checkbox" name="forimg" id="forimg" value="Rasm">Rasm </p>
+            <p> <input type="checkbox" name="forvideo" id="forvideo" value="Video">Video </p>    
+         </div>
+         
+         <div class="mainform">
+            <h1>Sarlavha</h1>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><input type="text" name="title" id="title" size="69" placeholder="Title"></p>
+                <p> <textarea name="body" id="body" cols="60" rows="10" placeholder="Yangilik"  style="display: none;"></textarea></p>
+                <p> <input type="file" name="images" id="images" accept="image/*" multiple onchange="readImage(this)"  style="display: none;"></p>
+                <p> <div id="forImage"></div> </p>
+                <p> <input type="file" name="videos" id="videos" accept="video/*" multiple onchange="readVideo(this)"  style="display: none;"></p>
+                <p> <div id="forVideo"></div> </p>
+                <p> <output name="forVideo" id="forVideo"></output></p>
+                <input type="submit" value="Saqlash" style="font-size: 20px;">
+            </form>
+         </div>
+     </div>
+     <!-- for competitions -->
+     <div class="formall" style="display: none;" id="formall">
+        <div class="checkboxs">
+            <h1> Kerakli qismni belgilang2: </h1>
+           <p> <input type="checkbox" name="forbody1" id="forbody1" value="Matn">Matn </p>
+           <p> <input type="checkbox" name="forimg1" id="forimg1" value="Rasm">Rasm </p>
+           <p> <input type="checkbox" name="forvideo1" id="forvideo1" value="Video">Video </p>    
+        </div>
+        
+        <div class="mainform">
+           <h1>Sarlavha</h1>
+           <form action="" method="post" enctype="multipart/form-data">
+               {% csrf_token %}
+               <p><input type="text" name="title1" id="title1" size="69" placeholder="Title"></p>
+               <p> <textarea name="body1" id="body1" cols="60" rows="10" placeholder="Yangilik"  style="display: none;"></textarea></p>
+               <p> <input type="file" name="images1" id="images1" accept="image/*" multiple onchange="readImage(this)"  style="display: none;"></p>
+               <p> <div id="forImage1"></div> </p>
+               <p> <input type="file" name="videos1" id="videos1" accept="video/*" multiple onchange="readVideo(this)"  style="display: none;"></p>
+               <p> <div id="forVideo1"></div> </p>
+               <p> <output name="forVideo" id="forVideo1"></output></p>
+               <input type="submit" value="Saqlash" style="font-size: 20px;">
+           </form>
+        </div>
+    </div>
+
+    <!-- end -->
+     <script>
+
+        let checkcound = 0;
+        document.getElementById('switcher').addEventListener('click', ()=>{
+            checkcound+=1;
+            if(checkcound%2==0){
+                document.getElementById('formall').style.display = "none";
+                document.getElementById('allform').style.display = "grid";
+            }else{
+                document.getElementById('allform').style.display = "none";
+                document.getElementById('formall').style.display = "grid";
+            }
+        })
+        
+        forbody = document.getElementById('forbody1');
+        forimg = document.getElementById('forimg1');
+        forvideo = document.getElementById('forvideo1');
+        forbody.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('body1').style.display = 'block';
+            }else{
+                document.getElementById('body1').style.display = 'none';
+            }
+        })
+
+        forimg.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('images1').style.display = 'block';
+            }else{
+                document.getElementById('images1').style.display = 'none';
+            }
+        })
+
+        forvideo.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('videos1').style.display = 'block';
+            }else{
+                document.getElementById('videos1').style.display = 'none';
+            }
+        })
+        var out1 = document.getElementById('forImage1');
+        var out2 = document.getElementById('forVideo1');
+        function readImage(input){
+            for(let i=0; i<input.files.length; i++){
+                var img = document.createElement('img');
+            img.src = window.URL.createObjectURL(input.files[i])
+            out1.appendChild(img);
+            }
+        }
+        function readVideo(input){
+            for(let i=0; i<input.files.length; i++){
+                var video = document.createElement('video');
+            video.src = window.URL.createObjectURL(input.files[i])
+            video.width = 200
+            video.height = 200
+            video.controls = true;
+            out2.appendChild(video);
+            }
+        }
+
+        forbody = document.getElementById('forbody');
+        forimg = document.getElementById('forimg');
+        forvideo = document.getElementById('forvideo');
+        forbody.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('body').style.display = 'block';
+            }else{
+                document.getElementById('body').style.display = 'none';
+            }
+        })
+
+        forimg.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('images').style.display = 'block';
+            }else{
+                document.getElementById('images').style.display = 'none';
+            }
+        })
+
+        forvideo.addEventListener('change', function(){
+            if(this.checked){
+                document.getElementById('videos').style.display = 'block';
+            }else{
+                document.getElementById('videos').style.display = 'none';
+            }
+        })
+        var out1 = document.getElementById('forImage');
+        var out2 = document.getElementById('forVideo');
+        function readImage(input){
+            for(let i=0; i<input.files.length; i++){
+                var img = document.createElement('img');
+            img.src = window.URL.createObjectURL(input.files[i])
+            out1.appendChild(img);
+            }
+        }
+        function readVideo(input){
+            for(let i=0; i<input.files.length; i++){
+                var video = document.createElement('video');
+            video.src = window.URL.createObjectURL(input.files[i])
+            video.width = 200
+            video.height = 200
+            video.controls = true;
+            out2.appendChild(video);
+            }
+        }
+     </script>
+</body>
+</html>

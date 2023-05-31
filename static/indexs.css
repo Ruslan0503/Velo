@@ -1,0 +1,55 @@
+.outputPlace{
+    text-align: center;
+    width: 100%; 
+    margin-top: 1%;
+ }
+
+ .outputPlace hr{
+     width: 80%;
+     margin-left: auto;
+     margin-right: auto;
+     border:1px solid blue;
+     box-shadow: 1px 2px 1px 2px blue;
+ }
+
+ .forbody{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid gainsboro;
+    word-wrap: break-word;
+    border-radius: 10px 10px 10px 10px;
+ }
+
+.forone{
+    width: 80%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border:5px solid darkgray;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 5px 5px 5px 5px darkgray;
+}
+
+.forone img{
+    width: 100%;
+    height: auto;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.row {
+    margin: 15px;
+}
+
+.row img{
+    width: 400px;
+    height: 350px;
+}
+
+.forvideo{
+    width: 80%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block index %}
+<link rel="stylesheet" href="{% static 'indexs.css' %}">
+<script src="{% static 'js/index.js' %}"></script>
+  <div class="outputPlace">
+   {% for i in poccets %}
+    <b>{{i.created}}</b>
+    <hr>
+     <h1> {{i.title}} </h1>
+      
+     {% if i.images|length == 1 %}
+       <div class="forone">
+         {% for j in i.images %}
+         <img src="{{j.images.url}}" alt="">
+         {% endfor %}
+       </div>
+       {% elif not i.images|length == 1 %}
+       <div class="container">
+        <div class="row">
+          {% for j in i.images %}
+          <a href="{{j.images.url}}" data-toggle="lightbox" data-gallery="gallery" class="col-md-4">
+            <img src="{{j.images.url}}" class="img-fluid rounded">
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+     {% endif %}
+      
+     <div class="forvideo">
+       {% for j in i.videos %}
+         <video width="100%" height="700" controls>
+           <source src="{{j.video.url}}" type="video/mp4">
+         </video>
+       {% endfor %}
+     </div>
+
+     {% if not i.body|length == 0 %}
+     <div class="forbody">
+      {{i.body}}
+    </div>
+     {% endif %}
+
+   {% endfor %}     
+  </div>
+{% endblock index %}
